@@ -34,6 +34,7 @@ const userSchema = new mongoose.Schema({
     ]
 });
 
+// bcrypt the password
 userSchema.pre('save', function(next){
     if(this.isModified('password')){
         this.password = bycrypt.hashSync(this.password)
@@ -42,6 +43,7 @@ userSchema.pre('save', function(next){
     next()
 });
 
+// create token 
 userSchema.methods.createToken = async function(){
     try{
         Token = jwt.sign({_id: this._id}, "pooja");

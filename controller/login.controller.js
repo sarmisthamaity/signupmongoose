@@ -8,12 +8,16 @@ const login = async(req, res) => {
             res.status(404).json({message: "field sholud be filled"});
         }
         const findUser = await createSchema.findOne({email: email});
-        res.send(findUser);
         console.log(findUser);
-        if(findUser){
-            const checkpassword = await bycrypt.compare(password, findUser.password);
+        const checkpassword = await bycrypt.compare(password, findUser.password);
+        console.log(checkpassword);
+        if(checkpassword){
+            // const checkpassword = await bycrypt.compare(password, findUser.password);
             const token = await findUser.createToken();
             console.log(token);
+            res.status(200).json({message: "login succesfully"});
+        }else{
+            res.status(400).json({message: "password is worng"})
         }
     }
     catch(err){
