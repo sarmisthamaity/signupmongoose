@@ -2,11 +2,10 @@ const express = require('express');
 const app = express();
 require('dotenv').config();
 app.use(express.json());
+
 const signuproute = require('./routes/signup.router');
 const login = require('./routes/login.router');
 
-// const mainrout = require('./routes');
-// app.use('/', mainrout);
 
 app.use('/sign', signuproute)
 app.use('/log', login)
