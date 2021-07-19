@@ -1,4 +1,3 @@
-const jwt = require('jsonwebtoken');
 const connection = require('../database/connection')
 const mongoose = require('mongoose');
 const joi = require('joi');
@@ -21,7 +20,7 @@ const userSchema = new mongoose.Schema({
         required: true
     },
     dateofBirth: {
-        type: Number,
+        type: String,
         required: true
     },
     tokens: [
@@ -34,19 +33,10 @@ const userSchema = new mongoose.Schema({
     ]
 });
 
-// bcrypt the password
-userSchema.pre('save', function(next){
-    if(this.isModified('password')){
-        this.password = bycrypt.hashSync(this.password)
-        this.cPassword = bycrypt.hashSync(this.cPassword)
-    }
-    next()
-});
-
-// create token 
+/*
 userSchema.methods.createToken = async function(){
     try{
-        Token = jwt.sign({_id: this._id}, "pooja");
+        Token = jwt.sign({_id: this._id}, process.env.SERECT_KEY);
         this.tokens = this.tokens.concat({token: Token})
         const s = await this.save()
         console.log(s);
@@ -55,7 +45,7 @@ userSchema.methods.createToken = async function(){
         console.log(err);
     };
 };
-
+*/
 
 const usermodel = new mongoose.model('collections', userSchema);
 module.exports = usermodel;
