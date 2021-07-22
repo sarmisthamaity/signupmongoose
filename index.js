@@ -3,13 +3,9 @@ const app = express();
 require('dotenv').config();
 app.use(express.json());
 
-const signuproute = require('./routes/signup.router');
-const login = require('./routes/login.router');
+const route = require('./routes/app')
 
-
-app.use('/sign', signuproute)
-app.use('/log', login)
-
+app.use('/', route);
 
 app.listen(process.env.PORT, () => {
     console.log(`server is running on this ${process.env.PORT}`);

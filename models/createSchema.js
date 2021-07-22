@@ -20,15 +20,7 @@ const userSchema = new mongoose.Schema({
     dateofBirth: {
         type: String,
         required: true
-    },
-    tokens: [
-        {
-            token: {
-                type: String,
-                required: true
-            }
-        }
-    ]
+    }
 });
 
 
