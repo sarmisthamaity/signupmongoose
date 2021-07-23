@@ -1,9 +1,6 @@
 const bycrypt = require('bcryptjs');
 const createSchema = require('../models/createSchema');
-// const jwt = require('jsonwebtoken');
 const authToken = require('./createToken');
-// console.log(authToken.createAuthtoken);
-
 
 const login = async(req, res) => {
     console.log(req.body);
@@ -14,14 +11,15 @@ const login = async(req, res) => {
         const checkpassword = await bycrypt.compare(password, findUser.password);
         console.log(checkpassword, "sarmis");
         if(checkpassword){
-            const authToken = require('./createToken');
             const createtoken = await authToken.createAuthtoken({_id});
-            console.log(createtoken, "234");
+            console.log(createtoken);
             // res.cookie("cookiesname", createtoken);
             console.log("login");
-            return res.status(200).json({message: "login succesfully"});
+            return res.status(200).send({message: "login succesfully",  
+                                            token: createtoken,
+                                            status: 200});
         }else{
-            return res.status(199).json({message: "password is worng"})
+            return res.status(400).json({message: "password is worng"})
         }
     }
     catch(err){
